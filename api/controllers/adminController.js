@@ -227,9 +227,9 @@ exports.admin_user_update_post = [
     if (req.payload.role === 'admin') {
       let updateSet = {}
 
-      if (req.body['first_name']) { updateSet['user_first_name'] = req.body.first_name }
+      if (req.body['firstName']) { updateSet['user_first_name'] = req.body.firstName }
 
-      if (req.body['family_name']) { updateSet['user_family_name'] = req.body.family_name }
+      if (req.body['familyName']) { updateSet['user_family_name'] = req.body.familyName }
 
       if (req.body['role']) { updateSet['user_role'] = req.body.role }
 

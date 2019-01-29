@@ -21,8 +21,8 @@ exports.index_signup_post = [
         return res.status(422).json({ code: '422', message: 'user with email ' + foundUser.user_email + ' already exists' })
       } else {
         User.create({
-          user_first_name: req.body.first_name,
-          user_family_name: req.body.family_name,
+          user_first_name: req.body.firstName,
+          user_family_name: req.body.familyName,
           user_email: req.body.email,
           user_password: req.body.password,
           user_role: req.body.role

@@ -752,11 +752,11 @@
 						"description": "les données du user à modifier.",
 						"schema": {
 							"properties": {
-								"first_name": {
+								"firstName": {
 									"type": "string",
 									"description": "le nouveau prenom du user à modifier."
 								},
-								"family_name": {
+								"familyName": {
 									"type": "string",
 									"description": "le nouveau nom de famille du user à modifier."
 								},
@@ -1756,16 +1756,16 @@
 	"definitions": {
 		"User_creation": {
 			"required": [
-				"first_name",
-				"family_name",
+				"firstName",
+				"familyName",
 				"email",
 				"password"
 			],
 			"properties": {
-				"first_name": {
+				"firstName": {
 					"type": "string"
 				},
-				"family_name": {
+				"familyName": {
 					"type": "string"
 				},
 				"email": {
