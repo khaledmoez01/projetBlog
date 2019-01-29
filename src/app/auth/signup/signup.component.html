@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 offset-md-4">
+      <div class="login-panel card">
+        <div class="card-header">
+          <h3 class="card-title">Please Sign up</h3>
+        </div>
+        <div class="card-body">
+          <form role="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <fieldset>
+              <div class="form-group">
+                <input type="text"
+                       id="firstName" 
+                       class="form-control"
+                       formControlName="firstName"
+                       placeholder="First name"
+                       autofocus
+                       required>
+                <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger"> 
+                  <div *ngIf="firstName.errors.required">
+                    First name is required.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text"
+                       id="familyName" 
+                       class="form-control"
+                       formControlName="familyName"
+                       placeholder="Last name"
+                       required>
+                       <div *ngIf="familyName.invalid && (familyName.dirty || familyName.touched)" class="alert alert-danger"> 
+                         <div *ngIf="familyName.errors.required">
+                           Family name is required.
+                         </div>
+                       </div>
+              </div>
+              <div class="form-group">
+                <input type="email"
+                       id="email" 
+                       class="form-control"
+                       formControlName="email"
+                       placeholder="E-mail"
+                       autofocus
+                       required>
+                       <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger"> 
+                         <div *ngIf="email.errors.required">
+                           Email is required.
+                         </div>
+                       </div>
+              </div>
+              <div class="form-group">
+                <input type="password"
+                       id="password"
+                       class="form-control"
+                       formControlName="password" 
+                       placeholder="Password"
+                       value=""
+                       required>
+                       <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger"> 
+                         <div *ngIf="password.errors.required">
+                           Password name is required.
+                         </div>
+                       </div>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="role" id="role_admin" value="admin" checked>
+                <label class="form-check-label" for="role_admin">Admin</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="role" id="role_simpleUser" value="simpleuser">
+                <label class="form-check-label" for="role_simpleUser">Simple user</label>
+              </div>
+              <div *ngIf="role.invalid && (role.dirty || role.touched)" class="alert alert-danger"> 
+                <div *ngIf="role.errors.required">
+                  Role name is required.
+                </div>
+              </div>
+              <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="signupForm.invalid">Create an account</button>
+            </fieldset>
+          </form>
+          <p class="text-danger">{{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

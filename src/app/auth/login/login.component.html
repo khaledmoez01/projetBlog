@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 offset-md-4">
+      <div class="login-panel card">
+        <div class="card-header">
+          <h3 class="card-title">Please Sign In</h3>
+        </div>
+        <div class="card-body">
+          <form role="form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+            <fieldset>
+              <div class="form-group">
+                <input type="email"
+                       id="email" 
+                       class="form-control"
+                       formControlName="email"
+                       placeholder="E-mail">
+              </div>
+              <div class="form-group">
+                <input type="password"
+                       id="password"
+                       class="form-control"
+                       formControlName="password" 
+                       placeholder="Password"
+                       value="">
+              </div>
+              <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="signInForm.invalid">Connexion</button>
+            </fieldset>
+          </form>
+          <p class="text-danger">{{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <p>Don&apos;t have an account? <a routerLink="/signup" class="text-primary m-l-5"><b>Sign Up</b></a>
+      </p>
+    </div>
+  </div>
+</div>
