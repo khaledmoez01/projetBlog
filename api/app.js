@@ -7,6 +7,7 @@ let cookieParser = require('cookie-parser')
 let logger = require('morgan')
 let compression = require('compression')
 let helmet = require('helmet') // protection des vulnerabilites
+let cors = require('cors')
 
 let indexRouter = require('./routes/index')
 let adminRouter = require('./routes/admin')
@@ -15,6 +16,7 @@ let imageDownloadRouter = require('./routes/imageDownload')
 
 let app = express()
 app.use(helmet())
+app.use(cors())
 // Set up mongoose connection
 let mongoose = require('mongoose')
 let mongoDB = 'mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/' + process.env.DB_NAME
