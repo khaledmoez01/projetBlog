@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as feather from 'feather-icons';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-header-admin',
   templateUrl: './header-admin.component.html',
@@ -7,11 +10,23 @@ import * as feather from 'feather-icons';
 })
 export class HeaderAdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cookieService: CookieService,
+    private router: Router) { }
 
   ngOnInit() {
-    // kmg pour la gestion des petites icones. j'ai suivi cette discussion: 'How to use svg icon set package from node_modules in angular4?'
-    feather.replace();
+    // si, pour une raison ou une autre, le cookie n'existe pas; on revient à la page de login
+    if (!this.cookieService.check('authToken')) {
+      this.router.navigate(['/login']);
+    }
+    else {
+      // kmg pour la gestion des petites icones. j'ai suivi cette discussion: 'How to use svg icon set package from node_modules in angular4?'
+      feather.replace();
+    }
+  }
+
+  onSignOut() {
+    this.cookieService.delete('authToken');
+    this.router.navigate(['/login']);
   }
 
 }

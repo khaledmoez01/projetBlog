@@ -9,18 +9,25 @@ import { SingleArticleComponent } from './article-list/single-article/single-art
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { HeaderAdminComponent } from './header-admin/header-admin.component';
 
+import { AuthGuardService  as AuthGuard  } from './services/auth-guard.service';
+
 const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: ArticleListComponent },
   { path: 'article/:id', component: SingleArticleComponent },
   {
-    path: 'dashboard', component: HeaderAdminComponent, children: [
+    path: 'dashboard',
+    component: HeaderAdminComponent,
+    canActivate: [AuthGuard],
+    data: { 
+      expectedRole: 'admin'
+    },
+    children: [
       { path: 'users', component: UserListComponent },
       { path: 'articles', component: ArticleListComponent },
       { path: 'comments', component: CommentListComponent },
       { path: '', redirectTo: 'users', pathMatch: 'full' },
-
     ]
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

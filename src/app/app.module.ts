@@ -7,6 +7,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AuthService } from './services/auth.service';
 import { ArticlesService } from './services/articles.service';
@@ -46,7 +47,8 @@ import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-us
     ArticlesService ,
     AuthGuardService,
     CommentsService ,
-    UsersService
+    UsersService    ,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

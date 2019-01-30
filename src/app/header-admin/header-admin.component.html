@@ -4,15 +4,7 @@
 
 <router-outlet></router-outlet!-->
 
-<!--nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fivepoints BLOG</a>
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul>
-</nav!-->
-
+<!-- https://getbootstrap.com/docs/4.1/examples/dashboard/# -->
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <a class="navbar-brand bg-transparent shadow " href="#">Fivepoints BLOG</a>
@@ -24,8 +16,8 @@
       <li class="nav-item">
         <a class="nav-link" href="#"><span data-feather="user"></span> User profile</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><span data-feather="log-out"></span> Sign out</a>
+      <li class="nav-item" >
+        <a class="nav-link" (click)="onSignOut()"><span data-feather="log-out"></span> Sign out</a>
       </li>
     </ul>
   </div>
