@@ -618,6 +618,9 @@
 									"_id": {
 										"type": "string"
 									},
+									"user_role": {
+										"type": "string"
+									},
 									"user_first_name": {
 										"type": "string"
 									},

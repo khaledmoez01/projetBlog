@@ -204,7 +204,7 @@ exports.admin_users_get = [
 
   (req, res, next) => {
     if (req.payload.role === 'admin') {
-      User.find({}, 'user_first_name user_family_name user_email')
+      User.find({}, 'user_first_name user_family_name user_email user_role')
         .exec(function (err, listUsers) {
           if (err) {
             return res.status(500).send({ code: '500', message: 'There was a problem listing the users from the database: ' + err.message })
