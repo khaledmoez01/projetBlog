@@ -20,7 +20,6 @@ export class AuthService {
   isAuth = false;
   
   constructor(private http: HttpClient,
-    //public jwtHelper: JwtHelperService,
     private cookieService: CookieService
     ) { }
 
@@ -38,6 +37,10 @@ export class AuthService {
 
     // Check whether the token is expired
     return !helper.isTokenExpired(token);
+  }
+
+  signOut() {
+    this.cookieService.delete('authToken');    
   }
 
 }
