@@ -91,6 +91,42 @@
 				}
 			}
 		},
+		"/admin/": {
+			"get": {
+				"security": [
+					{
+						"Bearer_admin": []
+					}
+				],
+				"summary": "Récupérer le nombre de documents par collection dans la base de données.",
+				"description": "Récupérer le nombre de documents par collection dans la base de données. par un administrateur authentifié",
+				"responses": {
+					"200": {
+						"description": "le nombre de documents par collection",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"article_count": {
+									"type": "integer"
+								},
+								"user_count": {
+									"type": "integer"
+								},
+								"comment_count": {
+									"type": "integer"
+								}
+							}
+						}
+					},
+					"403": {
+						"$ref": "#/responses/Todos403ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/responses/Standard500ErrorResponse"
+					}
+				}
+			}
+		},
 		"/admin/article/create": {
 			"post": {
 				"security": [
@@ -752,11 +788,11 @@
 						"description": "les données du user à modifier.",
 						"schema": {
 							"properties": {
-								"firstName": {
+								"first_name": {
 									"type": "string",
 									"description": "le nouveau prenom du user à modifier."
 								},
-								"familyName": {
+								"family_name": {
 									"type": "string",
 									"description": "le nouveau nom de famille du user à modifier."
 								},
@@ -1756,16 +1792,16 @@
 	"definitions": {
 		"User_creation": {
 			"required": [
-				"firstName",
-				"familyName",
+				"first_name",
+				"family_name",
 				"email",
 				"password"
 			],
 			"properties": {
-				"firstName": {
+				"first_name": {
 					"type": "string"
 				},
-				"familyName": {
+				"family_name": {
 					"type": "string"
 				},
 				"email": {
