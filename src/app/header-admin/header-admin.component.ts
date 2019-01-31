@@ -30,5 +30,4 @@ export class HeaderAdminComponent implements OnInit {
     this.authService.signOut();
     this.router.navigate(['/login']);
   }
-
 }

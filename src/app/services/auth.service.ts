@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   signOut() {
-    this.cookieService.delete('authToken');    
+    this.cookieService.delete('authToken'); 
   }
 
 }

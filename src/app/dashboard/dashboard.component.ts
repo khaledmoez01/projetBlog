@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService, DashboardResponse } from '../services/dashboard.service';
 
+import * as feather from 'feather-icons';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,6 +17,7 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
+    feather.replace();
       
     this.dashboardService.countDashboard().subscribe(
       (data: DashboardResponse) => {
