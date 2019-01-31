@@ -14,6 +14,7 @@ import { ArticlesService } from './services/articles.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { CommentsService } from './services/comments.service';
 import { UsersService } from './services/users.service';
+import { DashboardService } from './services/dashboard.service';
 
 import { LoginComponent } from './auth/login/login.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -23,6 +24,9 @@ import { CommentListComponent } from './comment-list/comment-list.component';
 import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './http-interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AuthGuardService,
     CommentsService ,
     UsersService    ,
-    CookieService
+    CookieService   ,
+    DashboardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

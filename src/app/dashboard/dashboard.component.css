@@ -1,0 +1,40 @@
+div.card-box {
+  padding: 20px;
+  border: 1px solid rgba(54, 64, 74, 0.05);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-clip: padding-box;
+  background-color: #ffffff;
+}
+
+div.bg-icon {
+  height: 80px;
+  width: 80px;
+  text-align: center;
+  border-radius: 50%;
+  float: left;
+}
+
+div.bg-icon-articles {
+  background-color: rgba(52, 211, 235, 0.2);
+  border: 1px solid #34d3eb;
+}
+
+div.bg-icon-users {
+  background-color: rgba(114, 102, 186, 0.2);
+  border: 1px solid #7266ba;
+}
+
+div.bg-icon-comments {
+  background-color: rgba(129, 200, 104, 0.2);
+  border: 1px solid #81c868;
+}
+
+div.verticalAlignement {
+  margin-top: 20px;
+}
+
+h3.text-dark  {
+  line-height: 30px;
+  color: #797979 !important;
+}

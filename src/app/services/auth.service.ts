@@ -32,11 +32,13 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const token: string = this.cookieService.get('authToken');
-    const helper = new JwtHelperService();    
-
+    const helper = new JwtHelperService();
     // Check whether the token is expired
-    return !helper.isTokenExpired(token);
+    return !helper.isTokenExpired(this.getToken());
+  }
+
+  public getToken(): string {
+    return this.cookieService.get('authToken');
   }
 
   signOut() {
