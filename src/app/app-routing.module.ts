@@ -8,6 +8,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { SingleArticleComponent } from './article-list/single-article/single-article.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { HeaderAdminComponent } from './header-admin/header-admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuardService  as AuthGuard  } from './services/auth-guard.service';
 
@@ -27,11 +28,13 @@ const routes: Routes = [
       { path: 'users', component: UserListComponent },
       { path: 'articles', component: ArticleListComponent },
       { path: 'comments', component: CommentListComponent },
-      { path: '', redirectTo: 'users', pathMatch: 'full' },
+      { path: '', component: DashboardComponent },
+      { path: '**', redirectTo: '' }/*,
+      { path: '', redirectTo: 'users', pathMatch: 'full' },*/
     ]
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

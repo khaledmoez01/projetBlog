@@ -22,6 +22,7 @@ import { SingleArticleComponent } from './article-list/single-article/single-art
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-user.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-us
     SingleArticleComponent,
     CommentListComponent,
     HeaderAdminComponent,
-    HeaderSimpleUserComponent
+    HeaderSimpleUserComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
