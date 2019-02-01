@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
 import { User } from '../models/User.model';
+import { CookieService } from 'ngx-cookie-service';
+import decode from 'jwt-decode';
+import { Router } from '@angular/router';
 
 export interface usersListResponse {
   user_role: string;
@@ -23,7 +26,9 @@ export class UsersService {
   // usersSubject est un subject qui émettra cet array users
   usersSubject = new Subject<usersListResponse[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private cookieService: CookieService,
+    public router: Router) { }
   // cette méthode prendra le contenu de users et l'émettra à travers le subject
   emitUsers() {
     this.usersSubject.next(this.users);
@@ -61,8 +66,17 @@ export class UsersService {
     if (~userIndexToRemove) {
       return this.http.post(`${environment.uri}/admin/user/${userToRemove.id}/delete`, {}).subscribe(
         (data) => {
-          this.users.splice(userIndexToRemove, 1);
-          this.emitUsers();
+          const token: string = this.cookieService.get('authToken');
+          const tokenPayload = decode(token);
+
+          if ( tokenPayload.id !== userToRemove.id) {
+            this.users.splice(userIndexToRemove, 1);
+            this.emitUsers();
+          }
+          else {
+            // si l'utilisateur s'est auto supprimé, on retourne à la page de login
+            this.router.navigate(['/login']);
+          }
         },
         (error) => {
           console.log('erreur dans users-service lors du delete de l\'user ayant l\'email: ' + userToRemove.user_email);
