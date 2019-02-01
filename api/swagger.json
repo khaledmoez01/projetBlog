@@ -897,8 +897,9 @@
 									"type": "string",
 									"description": "l'objectID de l'user."
 								},
-								"__v": {
-									"type": "integer"
+								"user_role": {
+									"type": "string",
+									"description": "le role du user."
 								},
 								"user_first_name": {
 									"type": "string",

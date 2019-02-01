@@ -322,7 +322,7 @@ exports.admin_user_update_post = [
         let options = {
           new: true, // retourner le nouvel objet modifié
           runValidators: true, // retester de nouveau la validité des nouveaux champs
-          fields: '-user_password' // ne pas afficher le mot de passe à la sortie
+          fields: '-user_password -__v' // ne pas afficher le mot de passe à la sortie
         }
 
         User.findOneAndUpdate(
