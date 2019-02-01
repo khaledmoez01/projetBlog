@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup,  FormControl, Validators } from '@angular/forms';
+import { UsersService, usersListResponse } from '../services/users.service';
+import * as feather from 'feather-icons';
 
 @Component({
   selector: 'app-new-user-modal',
@@ -17,9 +19,11 @@ export class NewUserModalComponent implements OnInit {
   newUserForm: FormGroup;
   errorMessage: string;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal,
+    private usersService: UsersService) {}
 
   ngOnInit() {
+    feather.replace();
     this.initNewUserForm();
     console.log("*****this.id_avirerPlusTard ****")
     console.log(this.id_avirerPlusTard)
@@ -40,10 +44,24 @@ export class NewUserModalComponent implements OnInit {
   }
   private submitNewUserForm() {
     if (this.newUserForm.valid) {
-      console.log("*****this.errorMessage ****")
-      console.log(this.errorMessage);
-      this.activeModal.close(this.newUserForm.value);
+      // console.log("*****this.errorMessage ****")
+      // console.log(this.errorMessage);
+
+      this.usersService.newUser(this.newUserForm.value).subscribe(
+        (newUser: usersListResponse) => {
+          this.usersService.pushUser(newUser);
+          this.usersService.emitUsers();
+          // kmg important: si on veut travailler avec les données dans la fenetre mere,
+          // on envoie en argument "this.newUserForm.value"
+          this.activeModal.close(/*this.newUserForm.value*/);
+        },
+        (error) => {
+          this.errorMessage = error['error']['message'];      
+        });;
     }
+  }
+  emailFocus() {
+    this.errorMessage = "";
   }
 
 }

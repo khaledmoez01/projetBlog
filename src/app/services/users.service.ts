@@ -42,14 +42,10 @@ export class UsersService {
   }
 
   newUser(user: User) {
-    return this.http.post(`${environment.uri}/admin/user/create`, user).subscribe(
-      (newUser: usersListResponse) => {        
-        this.users.push(newUser);
-        this.emitUsers();
-      },
-      (error) => {
-        console.log('erreur dans users-service lors de la création d\'un user');
-        console.log(error/*['error']['message']*/);        
-      });
+    return this.http.post<usersListResponse>(`${environment.uri}/admin/user/create`, user)
+  }
+
+  pushUser(newUser: usersListResponse) {
+    this.users.push(newUser);
   }
 }

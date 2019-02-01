@@ -37,14 +37,22 @@ export class UserListComponent implements OnInit, OnDestroy {
     // ainsi que le supprimer dans NewUserModalComponent (new-user-modal-component.ts)
     // on va passer ce 'id_avirerPlusTard' au modal NewUserModalComponent (new-user-modal-component.ts)
     modalRef.componentInstance.id_avirerPlusTard = 10;
-    
-    modalRef.result.then((newUser) => {
-      this.usersService.newUser(newUser);
 
-    }).catch((error) => {
-      console.log('erreur03 dans user-list component ');
-      console.log(error);
-    });
+    /* **** kmg commentaire important **** */
+    /* j'ai mis le code ci-dessous en commentaire car l'appel au service se fait directement dans la modal */
+    /* je le laisse ici quand meme au cas ou j'en aurai besoin plus tard                                   */
+    
+    // // cette partie représente l'action ou l'utilisateur ferme la modale avec le bouton "vert"
+    // // ici newUser represente "this.newUserForm.value" dans la fenetre modale NewUserModalComponent
+    // modalRef.result.then((newUser) => {
+    //   this.usersService.newUser(newUser);
+
+    // }).catch((error) => {
+    //   console.log('erreur03 dans user-list component ');
+    //   console.log(error);
+    // });
+
+    /* **** fin kmg commentaire important **** */
   }
   
   ngOnDestroy() {
