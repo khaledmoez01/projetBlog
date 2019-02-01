@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
+import { User } from '../models/User.model';
 
 export interface usersListResponse {
   user_role              : string;
@@ -13,7 +14,6 @@ export interface usersListResponse {
   user_virtual_url       : string;
   id                     : string
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,19 @@ export class UsersService {
         this.emitUsers();
       },
       (error) => {
-        console.log('erreur dans user-list component');
+        console.log('erreur dans users-service lors de la récupération des users');
+        console.log(error/*['error']['message']*/);        
+      });
+  }
+
+  newUser(user: User) {
+    return this.http.post(`${environment.uri}/admin/user/create`, user).subscribe(
+      (newUser: usersListResponse) => {        
+        this.users.push(newUser);
+        this.emitUsers();
+      },
+      (error) => {
+        console.log('erreur dans users-service lors de la création d\'un user');
         console.log(error/*['error']['message']*/);        
       });
   }

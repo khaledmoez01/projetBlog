@@ -24,9 +24,12 @@ import { CommentListComponent } from './comment-list/comment-list.component';
 import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './http-interceptors/token.interceptor';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -39,14 +42,16 @@ import { TokenInterceptor } from './http-interceptors/token.interceptor';
     CommentListComponent,
     HeaderAdminComponent,
     HeaderSimpleUserComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewUserModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [
     AuthService     ,
@@ -62,6 +67,9 @@ import { TokenInterceptor } from './http-interceptors/token.interceptor';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    NewUserModalComponent
+  ]
 })
 export class AppModule { }

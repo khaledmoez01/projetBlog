@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsersService, usersListResponse } from '../services/users.service';
 import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NewUserModalComponent } from '../new-user-modal/new-user-modal.component';
 
 
 @Component({
@@ -12,7 +14,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: usersListResponse[];
   usersSubscription: Subscription;
   
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -25,6 +28,23 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     // emettre le subject pour la premiere fois
     this.usersService.emitUsers();
+  }
+
+  openNewUserFormModal() {
+    const modalRef = this.modalService.open(NewUserModalComponent);
+
+    // ce 'id_avirerPlusTard' sert juste d'exemple pour les prochains modals, il faudra le supprimer apres
+    // ainsi que le supprimer dans NewUserModalComponent (new-user-modal-component.ts)
+    // on va passer ce 'id_avirerPlusTard' au modal NewUserModalComponent (new-user-modal-component.ts)
+    modalRef.componentInstance.id_avirerPlusTard = 10;
+    
+    modalRef.result.then((newUser) => {
+      this.usersService.newUser(newUser);
+
+    }).catch((error) => {
+      console.log('erreur03 dans user-list component ');
+      console.log(error);
+    });
   }
   
   ngOnDestroy() {
