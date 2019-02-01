@@ -61,7 +61,7 @@ export class NewUserModalComponent implements OnInit {
             this.errorMessage = error['error']['message'];      
           });
       }
-      else {
+      else {      
         console.log("kmg reste a implémenter cette partie!!!!")
         console.log(this.newUserForm.value);
       }

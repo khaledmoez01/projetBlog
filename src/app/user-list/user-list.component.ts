@@ -57,7 +57,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteUser(user: usersListResponse) {
-    this.usersService.removeUser(user);
+    this.usersService.removeUser(user);   
   }
 
   onUpdateUserOpenModal(userToUpdate: usersListResponse) {

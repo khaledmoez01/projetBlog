@@ -55,7 +55,7 @@
       </div>
       <div *ngIf="newUserForm.controls.role?.invalid && (newUserForm.controls.role?.dirty || newUserForm.controls.role?.touched)" class="alert alert-danger">
         <div *ngIf="newUserForm.controls.role?.errors?.required">
-          Role name is required.
+          Role name is required.   
         </div>
       </div>
       <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="newUserForm.invalid">{{buttonCaption}}</button>
