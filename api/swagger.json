@@ -1366,6 +1366,9 @@
 				"security": [
 					{
 						"Bearer_admin": []
+					},
+					{
+						"Bearer_simple_user": []
 					}
 				],
 				"parameters": [
