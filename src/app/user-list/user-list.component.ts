@@ -59,6 +59,11 @@ export class UserListComponent implements OnInit, OnDestroy {
   onDeleteUser(user: usersListResponse) {
     this.usersService.removeUser(user);
   }
+
+  onUpdateUserOpenModal(userToUpdate: usersListResponse) {
+    const modalRef = this.modalService.open(NewUserModalComponent);
+    modalRef.componentInstance.userToUpdate = userToUpdate;    
+  }
   
   ngOnDestroy() {
     this.usersSubscription.unsubscribe();

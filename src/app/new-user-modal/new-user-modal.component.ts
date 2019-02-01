@@ -15,9 +15,12 @@ export class NewUserModalComponent implements OnInit {
   // je le laisse momentannement pour suivre la logique dans les prochains modal.
   // qui auront besoin d'un input. Ici, Faudra le virer plus tard.
   @Input() id_avirerPlusTard: Number;
+  @Input() userToUpdate: usersListResponse;
 
   newUserForm: FormGroup;
   errorMessage: string;
+  headerModalTitle: string;
+  buttonCaption : string;
 
   constructor(public activeModal: NgbActiveModal,
     private usersService: UsersService) {}
@@ -25,17 +28,17 @@ export class NewUserModalComponent implements OnInit {
   ngOnInit() {
     feather.replace();
     this.initNewUserForm();
-    console.log("*****this.id_avirerPlusTard ****")
-    console.log(this.id_avirerPlusTard)
+    this.headerModalTitle = this.userToUpdate? "Update user": "New user";
+    this.buttonCaption = this.userToUpdate? "Update": "Create";
   }
   
   private initNewUserForm() {
     this.newUserForm = new FormGroup({
-      'email'     : new FormControl('', [Validators.required, Validators.email]),
-      'password'  : new FormControl('', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]),
-      'firstName' : new FormControl('', [Validators.required]),
-      'familyName': new FormControl('', [Validators.required]),
-      'role'      : new FormControl('', [Validators.required])
+      'email'     : new FormControl({value: this.userToUpdate? this.userToUpdate.user_email:'', disabled: this.userToUpdate? true: false}, [Validators.required, Validators.email]),
+      'password'  : new FormControl({value: this.userToUpdate? '*':'', disabled: this.userToUpdate? true: false}, [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]),
+      'firstName' : new FormControl(this.userToUpdate? this.userToUpdate.user_first_name: '', [Validators.required]),
+      'familyName': new FormControl(this.userToUpdate? this.userToUpdate.user_family_name: '', [Validators.required]),
+      'role'      : new FormControl(this.userToUpdate? this.userToUpdate.user_role: 'admin' , [Validators.required])
     });
   }
 
@@ -44,20 +47,24 @@ export class NewUserModalComponent implements OnInit {
   }
   private submitNewUserForm() {
     if (this.newUserForm.valid) {
-      // console.log("*****this.errorMessage ****")
-      // console.log(this.errorMessage);
 
-      this.usersService.newUser(this.newUserForm.value).subscribe(
-        (newUser: usersListResponse) => {
-          this.usersService.pushUser(newUser);
-          this.usersService.emitUsers();
-          // kmg important: si on veut travailler avec les données dans la fenetre mere,
-          // on envoie en argument "this.newUserForm.value"
-          this.activeModal.close(/*this.newUserForm.value*/);
-        },
-        (error) => {
-          this.errorMessage = error['error']['message'];      
-        });;
+      if (!this.userToUpdate) {
+        this.usersService.newUser(this.newUserForm.value).subscribe(
+          (newUser: usersListResponse) => {
+            this.usersService.pushUser(newUser);
+            this.usersService.emitUsers();
+            // kmg important: si on veut travailler avec les données dans la fenetre mere,
+            // on envoie en argument "this.newUserForm.value"
+            this.activeModal.close(/*this.newUserForm.value*/);
+          },
+          (error) => {
+            this.errorMessage = error['error']['message'];      
+          });
+      }
+      else {
+        console.log("kmg reste a implémenter cette partie!!!!")
+        console.log(this.newUserForm.value);
+      }
     }
   }
   emailFocus() {

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">New user</h4>
+  <h4 class="modal-title">{{headerModalTitle}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true" data-feather="x-circle"></span>
   </button>
@@ -9,7 +9,7 @@
     <fieldset>
       <div class="form-group">
         <input type="text" id="firstName" class="form-control" formControlName="firstName" placeholder="First name"
-          autofocus required>
+          autofocus required [value]="userToUpdate?.user_first_name">
         <div *ngIf="newUserForm.controls.firstName?.invalid && (newUserForm.controls.firstName?.dirty || newUserForm.controls.firstName?.touched)" class="alert alert-danger">
           <div *ngIf="newUserForm.controls.firstName?.errors?.required">
             First name is required.
@@ -18,36 +18,39 @@
       </div>
       <div class="form-group">
         <input type="text" id="familyName" class="form-control" formControlName="familyName" placeholder="Family name"
-          required>
+          required  [value]="userToUpdate?.user_family_name">
         <div *ngIf="newUserForm.controls.familyName?.invalid && (newUserForm.controls.familyName?.dirty || newUserForm.controls.familyName?.touched)" class="alert alert-danger">
           <div *ngIf="newUserForm.controls.familyName?.errors?.required">
             Family name is required.
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <input type="email" id="email" class="form-control" formControlName="email" placeholder="E-mail" required (focus)="emailFocus()">
-        <div *ngIf="newUserForm.controls.email?.invalid && (newUserForm.controls.email?.dirty || newUserForm.controls.email?.touched)" class="alert alert-danger">
-          <div *ngIf="newUserForm.controls.email?.errors?.required">
-            Email is required.
+      <!--div *ngIf="!userToUpdate"!-->
+      <div>
+          <div class="form-group">
+            <input type="email" id="email" class="form-control" formControlName="email" placeholder="E-mail" required (focus)="emailFocus()" [value]="userToUpdate?.user_email">
+            <div *ngIf="newUserForm.controls.email?.invalid && (newUserForm.controls.email?.dirty || newUserForm.controls.email?.touched)" class="alert alert-danger">
+              <div *ngIf="newUserForm.controls.email?.errors?.required">
+                Email is required.
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <input type="password" id="password" class="form-control" formControlName="password" placeholder="Password"
-          value="" required>
-        <div *ngIf="newUserForm.controls.password?.invalid && (newUserForm.controls.password?.dirty || newUserForm.controls.password?.touched)" class="alert alert-danger">
-          <div *ngIf="newUserForm.controls.password?.errors?.required">
-            Password name is required.
+          <div class="form-group">
+            <input type="password" id="password" class="form-control" formControlName="password" placeholder="Password"
+              value="" required >
+            <div *ngIf="newUserForm.controls.password?.invalid && (newUserForm.controls.password?.dirty || newUserForm.controls.password?.touched)" class="alert alert-danger">
+              <div *ngIf="newUserForm.controls.password?.errors?.required">
+                Password name is required.
+              </div>
+            </div>
           </div>
-        </div>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" formControlName="role" id="role_admin" value="admin" checked>
+        <input class="form-check-input" type="radio" formControlName="role" id="role_admin" value="admin" [checked]='userToUpdate? userToUpdate.user_role === "admin": true'>
         <label class="form-check-label" for="role_admin">Admin</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" formControlName="role" id="role_simpleUser" value="simpleuser">
+        <input class="form-check-input" type="radio" formControlName="role" id="role_simpleUser" value="simpleuser"  [checked]='userToUpdate?.user_role === "simpleuser"'>
         <label class="form-check-label" for="role_simpleUser">Simple user</label>
       </div>
       <div *ngIf="newUserForm.controls.role?.invalid && (newUserForm.controls.role?.dirty || newUserForm.controls.role?.touched)" class="alert alert-danger">
@@ -55,7 +58,7 @@
           Role name is required.
         </div>
       </div>
-      <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="newUserForm.invalid">Create</button>
+      <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="newUserForm.invalid">{{buttonCaption}}</button>
     </fieldset>
   </form>
   <p class="text-danger">{{ errorMessage }}</p>
