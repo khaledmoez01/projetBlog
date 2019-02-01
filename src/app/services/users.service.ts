@@ -6,6 +6,7 @@ import { User } from '../models/User.model';
 import { CookieService } from 'ngx-cookie-service';
 import decode from 'jwt-decode';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 export interface usersListResponse {
   user_role: string;
@@ -28,7 +29,8 @@ export class UsersService {
 
   constructor(private http: HttpClient,
     private cookieService: CookieService,
-    public router: Router) { }
+    public router: Router,
+    private authService: AuthService) { }
   // cette méthode prendra le contenu de users et l'émettra à travers le subject
   emitUsers() {
     this.usersSubject.next(this.users);
@@ -75,6 +77,7 @@ export class UsersService {
           }
           else {
             // si l'utilisateur s'est auto supprimé, on retourne à la page de login
+            this.authService.signOut();
             this.router.navigate(['/login']);
           }
         },
