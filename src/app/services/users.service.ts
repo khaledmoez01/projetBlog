@@ -52,8 +52,37 @@ export class UsersService {
     return this.http.post<usersListResponse>(`${environment.uri}/admin/user/create`, user)
   }
 
-  pushUser(newUser: usersListResponse) {
+  updateUser(userToUpdate: usersListResponse, dataOfUser: User) {
+    return this.http.post<usersListResponse>(`${environment.uri}/admin/user/${userToUpdate.id}/update`, dataOfUser)
+  }
+
+  pushUsers(newUser: usersListResponse) {
     this.users.push(newUser);
+  }
+
+  updateUsers(userToUpdate: usersListResponse, newUser: usersListResponse) {
+    const userIndexToRemove = this.users.findIndex(
+      (userEl) => {
+        if (userEl === userToUpdate) {
+          return true;
+        }
+      }
+    );
+
+    if (~userIndexToRemove) {
+      const token: string = this.cookieService.get('authToken');
+      const tokenPayload = decode(token);
+
+      if (tokenPayload.id !== userToUpdate.id || newUser.user_role === 'admin') {
+        this.users[userIndexToRemove] = newUser
+        this.emitUsers();
+      }
+      else {
+        // si l'utilisateur admin s'est auto transformé en simpleuser, on retourne à la page de login
+        this.authService.signOut();
+        this.router.navigate(['/login']);
+      }
+    }
   }
 
   removeUser(userToRemove: usersListResponse) {
@@ -71,7 +100,7 @@ export class UsersService {
           const token: string = this.cookieService.get('authToken');
           const tokenPayload = decode(token);
 
-          if ( tokenPayload.id !== userToRemove.id) {
+          if (tokenPayload.id !== userToRemove.id) {
             this.users.splice(userIndexToRemove, 1);
             this.emitUsers();
           }

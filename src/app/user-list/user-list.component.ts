@@ -13,7 +13,7 @@ import * as feather from 'feather-icons';
 export class UserListComponent implements OnInit, OnDestroy {
   users: usersListResponse[];
   usersSubscription: Subscription;
-  
+
   constructor(private usersService: UsersService,
     private modalService: NgbModal) { }
 
@@ -21,7 +21,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     this.usersSubscription = this.usersService.usersSubject.subscribe(
       (users: usersListResponse[]) => {
-        this.users = users? users: [];
+        this.users = users ? users : [];
       }
     );
     this.usersService.getUsers();
@@ -42,7 +42,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     /* **** kmg commentaire important **** */
     /* j'ai mis le code ci-dessous en commentaire car l'appel au service se fait directement dans la modal */
     /* je le laisse ici quand meme au cas ou j'en aurai besoin plus tard                                   */
-    
+
     // // cette partie représente l'action ou l'utilisateur ferme la modale avec le bouton "vert"
     // // ici newUser represente "this.newUserForm.value" dans la fenetre modale NewUserModalComponent
     // modalRef.result.then((newUser) => {
@@ -57,14 +57,14 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteUser(user: usersListResponse) {
-    this.usersService.removeUser(user);   
+    this.usersService.removeUser(user);
   }
 
   onUpdateUserOpenModal(userToUpdate: usersListResponse) {
     const modalRef = this.modalService.open(NewUserModalComponent);
-    modalRef.componentInstance.userToUpdate = userToUpdate;    
+    modalRef.componentInstance.userToUpdate = userToUpdate;
   }
-  
+
   ngOnDestroy() {
     this.usersSubscription.unsubscribe();
   }

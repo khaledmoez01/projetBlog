@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup,  FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsersService, usersListResponse } from '../services/users.service';
 import * as feather from 'feather-icons';
 
@@ -20,53 +20,61 @@ export class NewUserModalComponent implements OnInit {
   newUserForm: FormGroup;
   errorMessage: string;
   headerModalTitle: string;
-  buttonCaption : string;
+  buttonCaption: string;
 
   constructor(public activeModal: NgbActiveModal,
-    private usersService: UsersService) {}
+    private usersService: UsersService) { }
 
   ngOnInit() {
     feather.replace();
     this.initNewUserForm();
-    this.headerModalTitle = this.userToUpdate? "Update user": "New user";
-    this.buttonCaption = this.userToUpdate? "Update": "Create";
+    this.headerModalTitle = this.userToUpdate ? "Update user" : "New user";
+    this.buttonCaption = this.userToUpdate ? "Update" : "Create";
   }
-  
+
   private initNewUserForm() {
     this.newUserForm = new FormGroup({
-      'email'     : new FormControl({value: this.userToUpdate? this.userToUpdate.user_email:'', disabled: this.userToUpdate? true: false}, [Validators.required, Validators.email]),
-      'password'  : new FormControl({value: this.userToUpdate? '*':'', disabled: this.userToUpdate? true: false}, [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]),
-      'firstName' : new FormControl(this.userToUpdate? this.userToUpdate.user_first_name: '', [Validators.required]),
-      'familyName': new FormControl(this.userToUpdate? this.userToUpdate.user_family_name: '', [Validators.required]),
-      'role'      : new FormControl(this.userToUpdate? this.userToUpdate.user_role: 'admin' , [Validators.required])
+      'email': new FormControl({ value: this.userToUpdate ? this.userToUpdate.user_email : '', disabled: this.userToUpdate ? true : false }, [Validators.required, Validators.email]),
+      'password': new FormControl({ value: this.userToUpdate ? '*' : '', disabled: this.userToUpdate ? true : false }, [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]),
+      'firstName': new FormControl(this.userToUpdate ? this.userToUpdate.user_first_name : '', [Validators.required]),
+      'familyName': new FormControl(this.userToUpdate ? this.userToUpdate.user_family_name : '', [Validators.required]),
+      'role': new FormControl(this.userToUpdate ? this.userToUpdate.user_role : 'admin', [Validators.required])
     });
   }
 
   closeModal() {
     this.activeModal.close('Modal Closed');
   }
+
   private submitNewUserForm() {
     if (this.newUserForm.valid) {
 
       if (!this.userToUpdate) {
         this.usersService.newUser(this.newUserForm.value).subscribe(
           (newUser: usersListResponse) => {
-            this.usersService.pushUser(newUser);
+            this.usersService.pushUsers(newUser);
             this.usersService.emitUsers();
             // kmg important: si on veut travailler avec les données dans la fenetre mere,
             // on envoie en argument "this.newUserForm.value"
             this.activeModal.close(/*this.newUserForm.value*/);
           },
           (error) => {
-            this.errorMessage = error['error']['message'];      
+            this.errorMessage = error['error']['message'];
           });
       }
-      else {      
-        console.log("kmg reste a implémenter cette partie!!!!")
-        console.log(this.newUserForm.value);
+      else {
+        this.usersService.updateUser(this.userToUpdate, this.newUserForm.value).subscribe(
+          (newUser: usersListResponse) => {
+            this.usersService.updateUsers(this.userToUpdate, newUser);
+            this.activeModal.close();
+          },
+          (error) => {
+            this.errorMessage = error['error']['message'];
+          });
       }
     }
   }
+
   emailFocus() {
     this.errorMessage = "";
   }
