@@ -675,7 +675,33 @@
 					"200": {
 						"description": "les détails de l'utilisateur à peine créé",
 						"schema": {
-							"$ref": "#/definitions/User_reponse"
+						    "type": "object",
+						    "properties": {
+						    	"_id": {
+						    		"type": "string"
+						    	},
+						    	"user_role": {
+						    		"type": "string"
+						    	},
+						    	"user_first_name": {
+						    		"type": "string"
+						    	},
+						    	"user_family_name": {
+						    		"type": "string"
+						    	},
+						    	"user_email": {
+						    		"type": "string"
+						    	},
+						    	"user_virtual_full_name": {
+						    		"type": "string"
+						    	},
+						    	"user_virtual_url": {
+						    		"type": "string"
+						    	},
+						    	"id": {
+						    		"type": "string"
+						    	}
+						    }
 						}
 					},
 					"422": {

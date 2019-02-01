@@ -241,8 +241,18 @@ exports.admin_user_create_post = [
             if (err) {
               return res.status(500).send({ code: '500', message: 'There was a problem adding the user to the database by the admin: ' + err.message })
             }
-            // res.status(200).send(user);
-            res.status(200).send({ code: '200', message: 'Création d\'utilisateur réussie' })
+            // res.status(200).send(user)
+            // res.status(200).send({ code: '200', message: 'Création d\'utilisateur réussie' })
+            res.status(200).send({
+              user_role: user.user_role,
+              _id: user._id,
+              user_first_name: user.user_first_name,
+              user_family_name: user.user_family_name,
+              user_email: user.user_email,
+              user_virtual_full_name: user.user_virtual_full_name,
+              user_virtual_url: user.user_virtual_url,
+              id: user.id
+            })
           })
         }
       })
