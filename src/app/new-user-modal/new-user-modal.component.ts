@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UsersService, usersListResponse } from '../services/users.service';
+import { UsersService } from '../services/users.service';
+import { usersListResponse } from '../models/User.model';
 import * as feather from 'feather-icons';
 
 @Component({

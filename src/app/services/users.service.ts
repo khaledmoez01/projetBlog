@@ -2,22 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
-import { User } from '../models/User.model';
+import { User, usersListResponse } from '../models/User.model';
 import { CookieService } from 'ngx-cookie-service';
 import decode from 'jwt-decode';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
-
-export interface usersListResponse {
-  user_role: string;
-  _id: string;
-  user_first_name: string;
-  user_family_name: string;
-  user_email: string;
-  user_virtual_full_name: string;
-  user_virtual_url: string;
-  id: string
-}
 
 @Injectable({
   providedIn: 'root'
