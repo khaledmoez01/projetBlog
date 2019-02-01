@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {  FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, UserLoginResponse } from '../../services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -13,8 +13,7 @@ export class LoginComponent implements OnInit {
   signInForm: FormGroup;
   errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder,
-    private authService: AuthService,
+  constructor(private authService: AuthService,
     private router: Router,
     private cookieService: CookieService) { }
 
