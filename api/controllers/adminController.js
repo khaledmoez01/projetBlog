@@ -270,7 +270,7 @@ exports.admin_user_get = [
       async.parallel(
         {
           user: function (callback) {
-            User.findById(req.params.id_user).select(' -user_password').exec(callback)
+            User.findById(req.params.id_user).select(' -user_password -__v').exec(callback)
           },
           user_articles: function (callback) {
             Article.find({ 'article_user': req.params.id_user }, 'article_title article_content').exec(callback)

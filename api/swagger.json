@@ -762,9 +762,6 @@
 										"user_email": {
 											"type": "string"
 										},
-										"__v": {
-											"type": "integer"
-										},
 										"user_virtual_full_name": {
 											"type": "string"
 										},
