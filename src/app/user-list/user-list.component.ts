@@ -3,7 +3,7 @@ import { UsersService, usersListResponse } from '../services/users.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewUserModalComponent } from '../new-user-modal/new-user-modal.component';
-
+import * as feather from 'feather-icons';
 
 @Component({
   selector: 'app-user-list',
@@ -28,6 +28,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     // emettre le subject pour la premiere fois
     this.usersService.emitUsers();
+    feather.replace();
   }
 
   openNewUserFormModal() {
@@ -53,6 +54,10 @@ export class UserListComponent implements OnInit, OnDestroy {
     // });
 
     /* **** fin kmg commentaire important **** */
+  }
+
+  onDeleteUser(user: usersListResponse) {
+    this.usersService.removeUser(user);
   }
   
   ngOnDestroy() {

@@ -6,3 +6,20 @@
   background-clip: padding-box;
   background-color: #ffffff;
 }
+
+.actions a {
+  padding: 5px;
+  margin-right: 5px;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+
+.actions {
+  white-space: nowrap;
+  width: 1%;
+}
+
+#tableUsers tr:hover td:not(:first-child){
+  background: #ddd;
+}
+

@@ -5,14 +5,14 @@ import { Subject } from 'rxjs';
 import { User } from '../models/User.model';
 
 export interface usersListResponse {
-  user_role              : string;
-  _id                    : string;
-  user_first_name        : string;
-  user_family_name       : string;
-  user_email             : string;
-  user_virtual_full_name : string;
-  user_virtual_url       : string;
-  id                     : string
+  user_role: string;
+  _id: string;
+  user_first_name: string;
+  user_family_name: string;
+  user_email: string;
+  user_virtual_full_name: string;
+  user_virtual_url: string;
+  id: string
 }
 
 @Injectable({
@@ -37,7 +37,7 @@ export class UsersService {
       },
       (error) => {
         console.log('erreur dans users-service lors de la récupération des users');
-        console.log(error/*['error']['message']*/);        
+        console.log(error/*['error']['message']*/);
       });
   }
 
@@ -47,5 +47,28 @@ export class UsersService {
 
   pushUser(newUser: usersListResponse) {
     this.users.push(newUser);
+  }
+
+  removeUser(userToRemove: usersListResponse) {
+    const userIndexToRemove = this.users.findIndex(
+      (userEl) => {
+        if (userEl === userToRemove) {
+          return true;
+        }
+      }
+    );
+
+    if (~userIndexToRemove) {
+      return this.http.post(`${environment.uri}/admin/user/${userToRemove.id}/delete`, {}).subscribe(
+        (data) => {
+          this.users.splice(userIndexToRemove, 1);
+          this.emitUsers();
+        },
+        (error) => {
+          console.log('erreur dans users-service lors du delete de l\'user ayant l\'email: ' + userToRemove.user_email);
+          console.log(error/*['error']['message']*/);
+        }
+      )
+    }
   }
 }
