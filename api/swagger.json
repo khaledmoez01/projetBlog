@@ -652,6 +652,44 @@
 				}
 			}
 		},
+		"/admin/user/create": {
+			"post": {
+				"security": [
+					{
+						"Bearer_admin": []
+					}
+				],
+				"summary": "Création d'un utilisateur par un administrateur",
+				"description": "Création d'un utilisateur par un administrateur",
+				"parameters": [
+					{
+						"name": "user",
+						"in": "body",
+						"description": "le user à créer.",
+						"schema": {
+							"$ref": "#/definitions/User_creation"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "les détails de l'utilisateur à peine créé",
+						"schema": {
+							"$ref": "#/definitions/User_reponse"
+						}
+					},
+					"422": {
+						"$ref": "#/responses/Standard422ErrorResponse"
+					},
+					"403": {
+						"$ref": "#/responses/Todos403ErrorResponse"
+					},
+					"500": {
+						"$ref": "#/responses/Standard500ErrorResponse"
+					}
+				}
+			}
+		},
 		"/admin/user/{id_user}": {
 			"get": {
 				"security": [
@@ -1892,7 +1930,7 @@
 			}
 		},
 		"Standard422ErrorResponse": {
-			"description": "Erreur dans les données à insérer",
+			"description": "Erreur dans les données à insérer: donnée déja présente en base de données",
 			"schema": {
 				"$ref": "#/definitions/Error"
 			}

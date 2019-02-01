@@ -217,7 +217,42 @@ exports.admin_users_get = [
   }
 ]
 
-// 09   Récupérer les détails d’un user et des articles écrits par ce user et les commentaires écrits par ce user
+// 09 Création d’un user par un admin
+exports.admin_user_create_post = [
+  sanitizeBody('*').trim().escape(),
+
+  (req, res, next) => {
+    if (req.payload.role === 'admin') {
+      User.findOne({ 'user_email': req.body.email }).exec(function (err, foundUser) {
+        if (err) { return next(err) }
+
+        if (foundUser) {
+          // user exists
+          return res.status(422).json({ code: '422', message: 'user with email ' + foundUser.user_email + ' already exists' })
+        } else {
+          User.create({
+            user_first_name: req.body.firstName,
+            user_family_name: req.body.familyName,
+            user_email: req.body.email,
+            user_password: req.body.password,
+            user_role: req.body.role
+          },
+          function (err, user) {
+            if (err) {
+              return res.status(500).send({ code: '500', message: 'There was a problem adding the user to the database by the admin: ' + err.message })
+            }
+            // res.status(200).send(user);
+            res.status(200).send({ code: '200', message: 'Création d\'utilisateur réussie' })
+          })
+        }
+      })
+    } else {
+      return res.status(403).send({ code: 403, message: 'access denied' })
+    }
+  }
+]
+
+// 10   Récupérer les détails d’un user et des articles écrits par ce user et les commentaires écrits par ce user
 exports.admin_user_get = [
 
   (req, res, next) => {
@@ -249,7 +284,7 @@ exports.admin_user_get = [
   }
 ]
 
-// 10   body(firstName, lastName, email, password, role)  - Modifier un user
+// 11   body(firstName, lastName, email, password, role)  - Modifier un user
 exports.admin_user_update_post = [
   sanitizeBody('*').trim().escape(),
 
@@ -301,7 +336,7 @@ exports.admin_user_update_post = [
   }
 ]
 
-// 11   Pour chaque article écrit par :id_user, supprimer tous ses commentaires. Puis supprimer tous les commentaires écrits par ce :id_user, puis supprimer ce user
+// 12   Pour chaque article écrit par :id_user, supprimer tous ses commentaires. Puis supprimer tous les commentaires écrits par ce :id_user, puis supprimer ce user
 exports.admin_user_delete_post = [
 
   (req, res, next) => {
@@ -325,7 +360,7 @@ exports.admin_user_delete_post = [
   }
 ]
 
-// 12   Récupérer la liste des comments
+// 13   Récupérer la liste des comments
 exports.admin_comments_get = [
 
   (req, res, next) => {
@@ -345,7 +380,7 @@ exports.admin_comments_get = [
   }
 ]
 
-// 13   body(article, Contenu, date) - Créer un commentaire sur un article. Le commentateur sera ce même utilisateur
+// 14   body(article, Contenu, date) - Créer un commentaire sur un article. Le commentateur sera ce même utilisateur
 exports.admin_comment_create_post = [
   sanitizeBody('article').trim().escape(),
   sanitizeBody('content').trim().escape(),
@@ -383,7 +418,7 @@ exports.admin_comment_create_post = [
   }
 ]
 
-// 14   Récupérer les détails d’un commentaire, de son article et du commentateur qui y sont liés
+// 15   Récupérer les détails d’un commentaire, de son article et du commentateur qui y sont liés
 exports.admin_comment_get = [
 
   (req, res, next) => {
@@ -407,7 +442,7 @@ exports.admin_comment_get = [
   }
 ]
 
-// 15   body(Contenu, date)  -  Modifier un commentaire
+// 16   body(Contenu, date)  -  Modifier un commentaire
 exports.admin_comment_update_post = [
   sanitizeBody('content').trim().escape(),
   sanitizeBody('date').toDate(),
@@ -457,7 +492,7 @@ exports.admin_comment_update_post = [
   }
 ]
 
-// 16   Supprimer un commentaire
+// 17   Supprimer un commentaire
 exports.admin_comment_delete_post = [
 
   (req, res, next) => {
