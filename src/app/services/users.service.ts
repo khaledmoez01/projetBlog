@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
-import { User, usersListResponse } from '../models/User.model';
+import { User, usersListResponse, userSingleResponse } from '../models/User.model';
 import { CookieService } from 'ngx-cookie-service';
 import decode from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -20,21 +20,18 @@ export class UsersService {
     private cookieService: CookieService,
     public router: Router,
     private authService: AuthService) { }
+
   // cette méthode prendra le contenu de users et l'émettra à travers le subject
   emitUsers() {
     this.usersSubject.next(this.users);
   }
 
+  setUsers(users: usersListResponse[]) {
+    this.users = users;
+  }
+
   getUsers() {
-    return this.http.get<usersListResponse[]>(`${environment.uri}/admin/users`).subscribe(
-      (data: usersListResponse[]) => {
-        this.users = data;
-        this.emitUsers();
-      },
-      (error) => {
-        console.log('erreur dans users-service lors de la récupération des users');
-        console.log(error/*['error']['message']*/);
-      });
+    return this.http.get<usersListResponse[]>(`${environment.uri}/admin/users`)
   }
 
   newUser(user: User) {
@@ -45,18 +42,12 @@ export class UsersService {
     return this.http.post<usersListResponse>(`${environment.uri}/admin/user/${userToUpdate.id}/update`, dataOfUser)
   }
 
-  pushUsers(newUser: usersListResponse) {
+  pushIntoUsers(newUser: usersListResponse) {
     this.users.push(newUser);
   }
 
-  updateUsers(userToUpdate: usersListResponse, newUser: usersListResponse) {
-    const userIndexToRemove = this.users.findIndex(
-      (userEl) => {
-        if (userEl === userToUpdate) {
-          return true;
-        }
-      }
-    );
+  updateOfUsers(userToUpdate: usersListResponse, newUser: usersListResponse) {
+    const userIndexToRemove = this.getIndexInUsers(userToUpdate)
 
     if (~userIndexToRemove) {
       const token: string = this.cookieService.get('authToken');
@@ -74,36 +65,36 @@ export class UsersService {
     }
   }
 
-  removeUser(userToRemove: usersListResponse) {
-    const userIndexToRemove = this.users.findIndex(
+  getIndexInUsers(user: usersListResponse) {
+    return this.users.findIndex(
       (userEl) => {
-        if (userEl === userToRemove) {
+        if (userEl === user) {
           return true;
         }
       }
     );
+  }
 
-    if (~userIndexToRemove) {
-      return this.http.post(`${environment.uri}/admin/user/${userToRemove.id}/delete`, {}).subscribe(
-        (data) => {
-          const token: string = this.cookieService.get('authToken');
-          const tokenPayload = decode(token);
+  removeUser(userToRemove: usersListResponse) {
+    return this.http.post(`${environment.uri}/admin/user/${userToRemove.id}/delete`, {})
+  }
 
-          if (tokenPayload.id !== userToRemove.id) {
-            this.users.splice(userIndexToRemove, 1);
-            this.emitUsers();
-          }
-          else {
-            // si l'utilisateur s'est auto supprimé, on retourne à la page de login
-            this.authService.signOut();
-            this.router.navigate(['/login']);
-          }
-        },
-        (error) => {
-          console.log('erreur dans users-service lors du delete de l\'user ayant l\'email: ' + userToRemove.user_email);
-          console.log(error/*['error']['message']*/);
-        }
-      )
+  removeFromUsers(index: number, user: usersListResponse) {
+    const token: string = this.cookieService.get('authToken');
+    const tokenPayload = decode(token);
+
+    if (tokenPayload.id !== user.id) {
+      this.users.splice(index, 1);
+      this.emitUsers();
     }
+    else {
+      // si l'utilisateur s'est auto supprimé, on retourne à la page de login
+      this.authService.signOut();
+      this.router.navigate(['/login']);
+    }
+  }
+
+  getSingleUser(id_user: string) {
+    return this.http.get<userSingleResponse>(`${environment.uri}/admin/user/${id_user}`);
   }
 }

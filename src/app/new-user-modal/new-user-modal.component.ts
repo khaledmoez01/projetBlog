@@ -53,7 +53,7 @@ export class NewUserModalComponent implements OnInit {
       if (!this.userToUpdate) {
         this.usersService.newUser(this.newUserForm.value).subscribe(
           (newUser: usersListResponse) => {
-            this.usersService.pushUsers(newUser);
+            this.usersService.pushIntoUsers(newUser);
             this.usersService.emitUsers();
             // kmg important: si on veut travailler avec les données dans la fenetre mere,
             // on envoie en argument "this.newUserForm.value"
@@ -66,7 +66,7 @@ export class NewUserModalComponent implements OnInit {
       else {
         this.usersService.updateUser(this.userToUpdate, this.newUserForm.value).subscribe(
           (newUser: usersListResponse) => {
-            this.usersService.updateUsers(this.userToUpdate, newUser);
+            this.usersService.updateOfUsers(this.userToUpdate, newUser);
             this.activeModal.close();
           },
           (error) => {

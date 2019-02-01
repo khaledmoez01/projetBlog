@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewUserModalComponent } from '../new-user-modal/new-user-modal.component';
 import * as feather from 'feather-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -16,7 +17,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   usersSubscription: Subscription;
 
   constructor(private usersService: UsersService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -25,10 +27,16 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.users = users ? users : [];
       }
     );
-    this.usersService.getUsers();
+    this.usersService.getUsers().subscribe(
+      (data: usersListResponse[]) => {
+        this.usersService.setUsers(data); // this.users = data; // this.usersService.setUsers(data)
+        this.usersService.emitUsers();// this.emitUsers();  // this.usersService.emitUsers()
+      },
+      (error) => {
+        console.log('erreur dans users-service lors de la récupération des users');
+        console.log(error/*['error']['message']*/);
+      });
 
-    // emettre le subject pour la premiere fois
-    this.usersService.emitUsers();
     feather.replace();
   }
 
@@ -58,12 +66,28 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteUser(user: usersListResponse) {
-    this.usersService.removeUser(user);
+    const userIndexToRemove = this.usersService.getIndexInUsers(user);
+    if (~userIndexToRemove) {
+      this.usersService.removeUser(user).subscribe(
+        (data) => {          
+          this.usersService.removeFromUsers(userIndexToRemove, user);
+        },
+        (error) => {
+          console.log('erreur dans users-service lors du delete de l\'user ayant l\'email: ' + user.user_email);
+          console.log(error/*['error']['message']*/);
+        }
+      );
+    }
   }
 
   onUpdateUserOpenModal(userToUpdate: usersListResponse) {
     const modalRef = this.modalService.open(NewUserModalComponent);
     modalRef.componentInstance.userToUpdate = userToUpdate;
+  }
+
+  onEditUser(user: usersListResponse) {
+    // localhost:4200/dashboard/user/:id
+    this.router.navigate(['/dashboard','user', user.id]);
   }
 
   ngOnDestroy() {

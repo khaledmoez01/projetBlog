@@ -9,6 +9,7 @@ import { SingleArticleComponent } from './article-list/single-article/single-art
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SingleUserComponent } from './user-list/single-user/single-user.component';
 
 import { AuthGuardService  as AuthGuard  } from './services/auth-guard.service';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
     },
     children: [
       { path: 'users', component: UserListComponent },
+      { path: 'user/:id', component: SingleUserComponent },
       { path: 'articles', component: ArticleListComponent },
       { path: 'comments', component: CommentListComponent },
       { path: '', component: DashboardComponent },

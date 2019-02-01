@@ -25,6 +25,7 @@ import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
+import { SingleUserComponent } from './user-list/single-user/single-user.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './http-interceptors/token.interceptor';
@@ -43,7 +44,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderAdminComponent,
     HeaderSimpleUserComponent,
     DashboardComponent,
-    NewUserModalComponent
+    NewUserModalComponent,
+    SingleUserComponent
   ],
   imports: [
     BrowserModule,

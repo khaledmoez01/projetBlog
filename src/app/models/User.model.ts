@@ -19,3 +19,25 @@ export interface usersListResponse {
   user_virtual_url: string;
   id: string
 }
+
+interface userDetailsArticleResponse {
+  _id: string,
+  article_title: string,
+  article_content: string,
+  article_virtual_content_introduction: string,
+  article_virtual_url: string,
+  id: string,
+}
+
+interface userDetailsCommentResponse {
+  _id: string,
+  comment_content: string,
+  comment_virtual_url: string,
+  id: string,
+}
+
+export interface userSingleResponse {
+  user : usersListResponse,
+  user_articles : userDetailsArticleResponse[],
+  user_comments : userDetailsCommentResponse[]
+}
