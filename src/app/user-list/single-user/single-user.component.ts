@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
-import { userSingleResponse, userDetailsArticleResponse  } from '../../models/User.model';
+import { 
+  userSingleResponse,
+  userDetailsArticleResponse,
+  userDetailsCommentResponse  }
+from '../../models/User.model';
 
 @Component({
   selector: 'app-single-user',
@@ -39,6 +43,11 @@ export class SingleUserComponent implements OnInit {
   onEditArticle(article: userDetailsArticleResponse) {
     console.log("kmg not implemented yet SingleUserComponent.onEditArticle");
     console.log(article);
+  }
+
+  onEditComment(comment: userDetailsCommentResponse) {
+    console.log("kmg not implemented yet SingleUserComponent.onEditComment");
+    console.log(comment);
   }
 
 }
