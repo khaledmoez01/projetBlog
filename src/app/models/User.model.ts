@@ -20,7 +20,7 @@ export interface usersListResponse {
   id: string
 }
 
-interface userDetailsArticleResponse {
+export interface userDetailsArticleResponse {
   _id: string,
   article_title: string,
   article_content: string,
@@ -29,7 +29,7 @@ interface userDetailsArticleResponse {
   id: string,
 }
 
-interface userDetailsCommentResponse {
+export interface userDetailsCommentResponse {
   _id: string,
   comment_content: string,
   comment_virtual_url: string,
