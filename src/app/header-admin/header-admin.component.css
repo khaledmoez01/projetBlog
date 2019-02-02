@@ -2,7 +2,7 @@ a {
   cursor: pointer;
 }
 
-@media all and (max-width: 576px)  
+@media all and (max-width: 768x)  
 {
   #containerResizeable,
   #rowResizeable {
@@ -10,7 +10,7 @@ a {
    }
 }
 
-@media all and (min-width: 576px)  
+@media all and (min-width: 768px)  
 {
   #containerResizeable,
   #rowResizeable {
