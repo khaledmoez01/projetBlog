@@ -14,7 +14,9 @@ export class DashboardComponent implements OnInit {
   user_count: Number = 6;
   comment_count: Number = 7;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(
+    private dashboardService: DashboardService
+  ) { }
 
   ngOnInit() {
     feather.replace();

@@ -13,9 +13,11 @@ export class LoginComponent implements OnInit {
   signInForm: FormGroup;
   errorMessage: string;
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private router: Router,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService
+  ) { }
 
   ngOnInit() {
     this.initForm();

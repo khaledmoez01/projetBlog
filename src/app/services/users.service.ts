@@ -16,10 +16,12 @@ export class UsersService {
   // usersSubject est un subject qui émettra cet array users
   usersSubject = new Subject<usersListResponse[]>();
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private cookieService: CookieService,
     public router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService
+  ) { }
 
   // cette méthode prendra le contenu de users et l'émettra à travers le subject
   emitUsers() {
@@ -34,6 +36,10 @@ export class UsersService {
     return this.http.get<usersListResponse[]>(`${environment.uri}/admin/users`)
   }
 
+  getSingleUser(id_user: string) {
+    return this.http.get<userSingleResponse>(`${environment.uri}/admin/user/${id_user}`);
+  }
+
   newUser(user: User) {
     return this.http.post<usersListResponse>(`${environment.uri}/admin/user/create`, user)
   }
@@ -42,8 +48,23 @@ export class UsersService {
     return this.http.post<usersListResponse>(`${environment.uri}/admin/user/${userToUpdate.id}/update`, dataOfUser)
   }
 
+  removeUser(userToRemove: usersListResponse) {
+    return this.http.post(`${environment.uri}/admin/user/${userToRemove.id}/delete`, {})
+  }
+
+  getIndexInUsers(user: usersListResponse) {
+    return this.users.findIndex(
+      (userEl) => {
+        if (userEl === user) {
+          return true;
+        }
+      }
+    );
+  }
+
   pushIntoUsers(newUser: usersListResponse) {
-    this.users.push(newUser);
+    this.users.push(newUser);    
+    this.emitUsers();
   }
 
   updateOfUsers(index: number, userToUpdate: usersListResponse, newUser: usersListResponse) {
@@ -60,21 +81,6 @@ export class UsersService {
       this.authService.signOut();
       this.router.navigate(['/login']);
     }
-
-  }
-
-  getIndexInUsers(user: usersListResponse) {
-    return this.users.findIndex(
-      (userEl) => {
-        if (userEl === user) {
-          return true;
-        }
-      }
-    );
-  }
-
-  removeUser(userToRemove: usersListResponse) {
-    return this.http.post(`${environment.uri}/admin/user/${userToRemove.id}/delete`, {})
   }
 
   removeFromUsers(index: number, user: usersListResponse) {
@@ -90,9 +96,5 @@ export class UsersService {
       this.authService.signOut();
       this.router.navigate(['/login']);
     }
-  }
-
-  getSingleUser(id_user: string) {
-    return this.http.get<userSingleResponse>(`${environment.uri}/admin/user/${id_user}`);
   }
 }

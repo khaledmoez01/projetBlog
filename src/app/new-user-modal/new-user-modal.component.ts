@@ -23,8 +23,10 @@ export class NewUserModalComponent implements OnInit {
   headerModalTitle: string;
   buttonCaption: string;
 
-  constructor(public activeModal: NgbActiveModal,
-    private usersService: UsersService) { }
+  constructor(
+    public activeModal: NgbActiveModal,
+    private usersService: UsersService
+  ) { }
 
   ngOnInit() {
     feather.replace();
@@ -49,19 +51,18 @@ export class NewUserModalComponent implements OnInit {
 
   private submitNewUserForm() {
     if (this.newUserForm.valid) {
-
       if (!this.userToUpdate) {
         this.usersService.newUser(this.newUserForm.value).subscribe(
           (newUser: usersListResponse) => {
             this.usersService.pushIntoUsers(newUser);
-            this.usersService.emitUsers();
             // kmg important: si on veut travailler avec les données dans la fenetre mere,
             // on envoie en argument "this.newUserForm.value"
             this.activeModal.close(/*this.newUserForm.value*/);
           },
           (error) => {
             this.errorMessage = error['error']['message'];
-          });
+          }
+        );
       }
       else {
         const userIndexToUpdate = this.usersService.getIndexInUsers(this.userToUpdate);        
@@ -73,7 +74,8 @@ export class NewUserModalComponent implements OnInit {
             },
             (error) => {
               this.errorMessage = error['error']['message'];
-            });
+            }
+          );
         }
       }
     }

@@ -11,9 +11,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class HeaderAdminComponent implements OnInit {
 
-  constructor(private cookieService: CookieService,
+  constructor(
+    private cookieService: CookieService,
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     // si, pour une raison ou une autre, le cookie n'existe pas; on revient à la page de login

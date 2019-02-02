@@ -16,9 +16,11 @@ export class UserListComponent implements OnInit, OnDestroy {
   users: usersListResponse[];
   usersSubscription: Subscription;
 
-  constructor(private usersService: UsersService,
+  constructor(
+    private usersService: UsersService,
     private modalService: NgbModal,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
 
@@ -35,7 +37,8 @@ export class UserListComponent implements OnInit, OnDestroy {
       (error) => {
         console.log('erreur dans users-service lors de la récupération des users');
         console.log(error/*['error']['message']*/);
-      });
+      }
+    );
 
     feather.replace();
   }
@@ -93,6 +96,4 @@ export class UserListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.usersSubscription.unsubscribe();
   }
-
-
 }

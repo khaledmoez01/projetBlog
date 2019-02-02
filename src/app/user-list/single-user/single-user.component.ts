@@ -12,9 +12,11 @@ export class SingleUserComponent implements OnInit {
   userDetails: userSingleResponse
 
   // ActivatedRoute permet de récupérer l'identifiant de l'url
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private userService: UsersService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
     // this.route est de type ActivatedRoute qui permet de récupérer l'identifiant de l'url
@@ -30,7 +32,8 @@ export class SingleUserComponent implements OnInit {
       (error) => {
         console.log('erreur dans single user component dans ngOnInit');
         console.log(error/*['error']['message']*/);
-      });
+      }
+    );
   }
 
 }
