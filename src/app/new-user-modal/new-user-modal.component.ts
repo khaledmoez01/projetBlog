@@ -64,14 +64,17 @@ export class NewUserModalComponent implements OnInit {
           });
       }
       else {
-        this.usersService.updateUser(this.userToUpdate, this.newUserForm.value).subscribe(
-          (newUser: usersListResponse) => {
-            this.usersService.updateOfUsers(this.userToUpdate, newUser);
-            this.activeModal.close();
-          },
-          (error) => {
-            this.errorMessage = error['error']['message'];
-          });
+        const userIndexToUpdate = this.usersService.getIndexInUsers(this.userToUpdate);        
+        if (~userIndexToUpdate) {
+          this.usersService.updateUser(this.userToUpdate, this.newUserForm.value).subscribe(
+            (newUser: usersListResponse) => {
+              this.usersService.updateOfUsers(userIndexToUpdate, this.userToUpdate, newUser);
+              this.activeModal.close();
+            },
+            (error) => {
+              this.errorMessage = error['error']['message'];
+            });
+        }
       }
     }
   }

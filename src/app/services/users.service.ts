@@ -46,23 +46,21 @@ export class UsersService {
     this.users.push(newUser);
   }
 
-  updateOfUsers(userToUpdate: usersListResponse, newUser: usersListResponse) {
-    const userIndexToRemove = this.getIndexInUsers(userToUpdate)
+  updateOfUsers(index: number, userToUpdate: usersListResponse, newUser: usersListResponse) {
 
-    if (~userIndexToRemove) {
-      const token: string = this.cookieService.get('authToken');
-      const tokenPayload = decode(token);
+    const token: string = this.cookieService.get('authToken');
+    const tokenPayload = decode(token);
 
-      if (tokenPayload.id !== userToUpdate.id || newUser.user_role === 'admin') {
-        this.users[userIndexToRemove] = newUser
-        this.emitUsers();
-      }
-      else {
-        // si l'utilisateur admin s'est auto transformé en simpleuser, on retourne à la page de login
-        this.authService.signOut();
-        this.router.navigate(['/login']);
-      }
+    if (tokenPayload.id !== userToUpdate.id || newUser.user_role === 'admin') {
+      this.users[index] = newUser
+      this.emitUsers();
     }
+    else {
+      // si l'utilisateur admin s'est auto transformé en simpleuser, on retourne à la page de login
+      this.authService.signOut();
+      this.router.navigate(['/login']);
+    }
+
   }
 
   getIndexInUsers(user: usersListResponse) {
