@@ -28,4 +28,23 @@ export class ArticlesService {
   getArticles() {
     return this.http.get<articlesListResponse[]>(`${environment.uri}/admin/articles`)
   }
+
+  removeArticle(articleToRemove: articlesListResponse) {
+    return this.http.post(`${environment.uri}/admin/article/${articleToRemove.id}/delete`, {})
+  }
+
+  getIndexInArticles(article: articlesListResponse) {
+    return this.articles.findIndex(
+      (articleEl) => {
+        if (articleEl === article) {
+          return true;
+        }
+      }
+    );
+  }
+
+  removeFromArticles(index: number) {
+      this.articles.splice(index, 1);
+      this.emitArticles();    
+  }
 }

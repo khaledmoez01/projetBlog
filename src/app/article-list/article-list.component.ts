@@ -29,7 +29,6 @@ export class ArticleListComponent implements OnInit, OnDestroy {
       (data: articlesListResponse[]) => {
         this.articlesService.setArticles(data); 
         this.articlesService.emitArticles();
-        console.log(data);
       },
       (error) => {
         console.log('erreur dans articles-service lors de la récupération des articles');
@@ -45,8 +44,18 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   }
 
   onDeleteArticle(article: articlesListResponse) {
-    console.log("kmg not implemented yet ArticleListComponent.onDeleteArticle");
-    console.log(article);
+    const articleIndexToRemove = this.articlesService.getIndexInArticles(article);
+    if (~articleIndexToRemove) {
+      this.articlesService.removeArticle(article).subscribe(
+        (data) => {          
+          this.articlesService.removeFromArticles(articleIndexToRemove);
+        },
+        (error) => {
+          console.log('erreur dans articles-service lors du delete de l\'article ayant le titre: ' + article.article_title);
+          console.log(error/*['error']['message']*/);
+        }
+      );
+    }
   }
 
   ngOnDestroy() {
