@@ -45,7 +45,7 @@ exports.admin_articles_get = [
       Article.find({}/*, 'article_title article_virtual_content_introduction' */)
       // kmg commentairechange
       // .select('-article_comments -article_image ') // le '-' sert à exclure ces donnes
-        .select(' -article_image ') // le '-' sert à exclure ces donnes
+        .select(' -article_image -__v') // le '-' sert à exclure ces donnes
         .populate('article_user', 'user_first_name user_family_name ')
         .exec(function (err, listArticles) {
           if (err) {
