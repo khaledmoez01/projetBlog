@@ -21,15 +21,15 @@
 </div>
 
 
-<div class="card" *ngFor="let comment of articleDetails?.article_comments;">
+<div class="card" *ngFor="let articleComment of articleComments;">
     <div class="card-body">
       <h5 class="card-title">
-        <a (click)="onEditUser(comment?.comment_user)" class="card-link">
-          {{ comment?.comment_user?.user_virtual_full_name }}
+        <a (click)="onEditUser(articleComment?.comment_user)" class="card-link">
+          {{ articleComment?.comment_user?.user_virtual_full_name }}
         </a></h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{comment?.comment_date | date | uppercase}}</h6>
-      <p class="card-text">{{comment?.comment_content}}</p>
-      <a (click)="onUpdateComment(comment)" class="card-link">Update Comment</a>
-      <a (click)="onDeleteComment(comment)" class="card-link">Delete Comment</a>
+      <h6 class="card-subtitle mb-2 text-muted">{{articleComment?.comment_date | date | uppercase}}</h6>
+      <p class="card-text">{{articleComment?.comment_content}}</p>
+      <a (click)="onUpdateArticleComment(articleComment)" class="card-link">Update Comment</a>
+      <a (click)="onDeleteArticleComment(articleComment)" class="card-link">Delete Comment</a>
     </div>
 </div>
