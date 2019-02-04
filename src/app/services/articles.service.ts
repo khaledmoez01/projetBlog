@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
-import { articlesListResponse } from '../models/Article.model';
+import { articlesListResponse, articleSingleResponse } from '../models/Article.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,14 @@ export class ArticlesService {
 
   removeArticle(articleToRemove: articlesListResponse) {
     return this.http.post(`${environment.uri}/admin/article/${articleToRemove.id}/delete`, {})
+  }
+
+  getSingleArticle(id_article: string) {
+    return this.http.get<articleSingleResponse>(`${environment.uri}/admin/article/${id_article}`);
+  }
+
+  getImageArticle(imageName: string) {
+    return this.http.get(`${environment.uri}/uploads/${imageName}`, {responseType: "blob"});
   }
 
   getIndexInArticles(article: articlesListResponse) {

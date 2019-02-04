@@ -1,3 +1,35 @@
-<p>
-  single-article works!
-</p>
+<div class="row">
+  <div class="col-12">
+    <h2>{{ articleDetails?.article?.article_title }}</h2>
+      <h6>by 
+        <a (click)="onEditUser(articleDetails?.article?.article_user)" class="card-link">
+          {{ articleDetails?.article?.article_user?.user_virtual_full_name }}
+        </a> - {{articleDetails?.article?.article_date | date | uppercase }}
+      </h6>
+    <img [src]="imageToShow" alt="article_image" *ngIf="!isImageLoading" class='imageUpload img-fluid'>
+    <p>{{ articleDetails?.article?.article_content }}</p>
+    <button class="btn btn-secondary" (click)="onBack()">Retour</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="page-title-box">
+      <h4 class="page-title" class="font-weight-bold">comments</h4>
+    </div>
+  </div>
+</div>
+
+
+<div class="card" *ngFor="let comment of articleDetails?.article_comments;">
+    <div class="card-body">
+      <h5 class="card-title">
+        <a (click)="onEditUser(comment?.comment_user)" class="card-link">
+          {{ comment?.comment_user?.user_virtual_full_name }}
+        </a></h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{comment?.comment_date | date | uppercase}}</h6>
+      <p class="card-text">{{comment?.comment_content}}</p>
+      <a (click)="onUpdateComment(comment)" class="card-link">Update Comment</a>
+      <a (click)="onDeleteComment(comment)" class="card-link">Delete Comment</a>
+    </div>
+</div>

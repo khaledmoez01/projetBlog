@@ -29,6 +29,7 @@ const routes: Routes = [
       { path: 'users', component: UserListComponent },
       { path: 'user/:id', component: SingleUserComponent },
       { path: 'articles', component: ArticleListComponent },
+      { path: 'article/:id', component: SingleArticleComponent },
       { path: 'comments', component: CommentListComponent },
       { path: '', component: DashboardComponent },
       { path: '**', redirectTo: '' }/*,

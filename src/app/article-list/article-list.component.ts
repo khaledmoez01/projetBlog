@@ -39,8 +39,7 @@ export class ArticleListComponent implements OnInit, OnDestroy {
   }
 
   onEditArticle(article: articlesListResponse) {
-    console.log("kmg not implemented yet ArticleListComponent.onEditArticle");
-    console.log(article);
+    this.router.navigate(['/dashboard','article', article.id]);
   }
 
   onDeleteArticle(article: articlesListResponse) {

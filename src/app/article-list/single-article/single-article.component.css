@@ -1,0 +1,11 @@
+.imageUpload {
+  height: auto;
+  max-width: 100%;
+}
+
+a.card-link{
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
