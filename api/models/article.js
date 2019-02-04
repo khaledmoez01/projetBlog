@@ -1,4 +1,6 @@
 let mongoose = require('mongoose')
+let path = require('path')
+let fs = require('fs')
 
 let Schema = mongoose.Schema
 
@@ -75,6 +77,15 @@ ArticleSchema.pre('remove', { document: true, query: false }, function (next) {
       if (err) {
         return next(err)
       }
+
+      // en supprimant l'article, on supprime son image dans le dossier upload
+      let file = path.join(process.cwd(), this.article_image)
+      fs.unlink(file, (err) => {
+        if (err) {
+          return next(err)
+        }
+        return next()
+      })
 
       // mongooseDeleteCommentsResult est un objet qui contient ces trois clé
       //     { n: 1, ok: 1, deletedCount: 1 }
