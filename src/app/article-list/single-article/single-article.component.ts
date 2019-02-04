@@ -51,7 +51,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
       this.articleDetails = articleDetailsResponse;
       this.isImageLoading = true;
 
-      this.articlesService.setArticleComments(this.articleDetails.article_comments); 
+      this.articlesService.setArticleComments(this.articleDetails.article_comments);
       this.articlesService.emitArticleComments();
 
       // voir la reponse de 'Gregor Doroschenko' dans la discussion 
@@ -69,9 +69,19 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
             console.log(error/*['error']['message']*/);
           },
           () => {
-            let element = document.getElementById('comment_' + this.router.url.split('#comment_').pop());
-            if (element)
-              element.scrollIntoView();
+            // ici les ancres ne peuvent pas etre implémentés 'normalement', je suis obligé de forcer le truc
+            // car les id des commentaires sont chargés aprés l'appel à http. ils ne sont donc pas statiques.
+            // on a implémenté la réponse de 'Alberto L. Bonfiglio' dans stackoverflow
+            // 'How to call scrollIntoView on an element in angular 2+' 
+            const tree = this.router.parseUrl(this.router.url);
+            if (tree.fragment) {
+              let element = document.getElementById(tree.fragment);
+              if (element) {
+                setTimeout(() => {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+                }, 500);
+              }
+            }
           }
         );
 
@@ -79,7 +89,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   }
 
   onBack() {
-    this.router.navigate(['/dashboard','articles']);
+    this.router.navigate(['/dashboard', 'articles']);
   }
 
   createImageFromBlob(image: Blob) {
@@ -91,7 +101,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     if (image) {
       reader.readAsDataURL(image);
     }
-  }  
+  }
 
   onUpdateArticleComment(comment: commentsListResponse) {
     console.log("kmg not implemented yet SingleArticleComponent.onUpdateComment");
@@ -102,7 +112,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
     const commentIndexToRemove = this.articlesService.getIndexInArticleComments(comment);
     if (~commentIndexToRemove) {
       this.articlesService.removeArticleComment(comment).subscribe(
-        (data) => {          
+        (data) => {
           this.articlesService.removeFromArticleComments(commentIndexToRemove);
         },
         (error) => {
@@ -114,7 +124,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
   }
 
   onEditUser(user: articlesUserResponse) {
-    this.router.navigate(['/dashboard','user', user.id]);
+    this.router.navigate(['/dashboard', 'user', user.id]);
   }
 
   ngOnDestroy() {
