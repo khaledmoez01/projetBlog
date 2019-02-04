@@ -98,10 +98,13 @@ exports.admin_article_get = [
           article: function (callback) {
             Article.findById(req.params.id_article)
               .populate('article_user', 'user_first_name user_family_name ')
+              .select('-__v')
               .exec(callback)
           },
           article_comments: function (callback) {
-            Comment.find({ 'comment_article': req.params.id_article }).exec(callback)
+            Comment.find({ 'comment_article': req.params.id_article })
+              .select('-__v')
+              .exec(callback)
           }
         },
         function (err, results) {
