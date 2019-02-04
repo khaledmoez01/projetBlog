@@ -67,6 +67,11 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
             this.isImageLoading = false;
             console.log('erreur dans single user component dans getImageArticle()');
             console.log(error/*['error']['message']*/);
+          },
+          () => {
+            let element = document.getElementById('comment_' + this.router.url.split('#comment_').pop());
+            if (element)
+              element.scrollIntoView();
           }
         );
 

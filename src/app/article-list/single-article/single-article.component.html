@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-12">
     <h2>{{ articleDetails?.article?.article_title }}</h2>
-      <h6>by 
-        <a (click)="onEditUser(articleDetails?.article?.article_user)" class="card-link">
-          {{ articleDetails?.article?.article_user?.user_virtual_full_name }}
-        </a> - {{articleDetails?.article?.article_date | date | uppercase }}
-      </h6>
+    <h6>by
+      <a (click)="onEditUser(articleDetails?.article?.article_user)" class="card-link">
+        {{ articleDetails?.article?.article_user?.user_virtual_full_name }}
+      </a> - {{articleDetails?.article?.article_date | date | uppercase }}
+    </h6>
     <img [src]="imageToShow" alt="article_image" *ngIf="!isImageLoading" class='imageUpload img-fluid'>
     <p>{{ articleDetails?.article?.article_content }}</p>
     <button class="btn btn-secondary" (click)="onBack()">Retour</button>
@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="card" *ngFor="let articleComment of articleComments;">
+<div class="card" *ngFor="let articleComment of articleComments;" [attr.id]="'comment_' + articleComment.id">
     <div class="card-body">
       <h5 class="card-title">
         <a (click)="onEditUser(articleComment?.comment_user)" class="card-link">

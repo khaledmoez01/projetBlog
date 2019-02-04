@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { commentsListResponse } from '../models/Comment.model';
 import { CommentsService } from '../services/comments.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import * as feather from 'feather-icons';
 
 @Component({
@@ -42,8 +42,10 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
 
   onEditComment(comment: commentsListResponse) {
-    console.log("kmg not implemented yet CommentListComponent.onEditComment");
-    console.log(comment);
+    let navigationExtras: NavigationExtras = {
+      fragment: 'comment_'+comment._id
+    };
+    this.router.navigate(['/dashboard','article', comment.comment_article.id], navigationExtras);
   }
 
 
