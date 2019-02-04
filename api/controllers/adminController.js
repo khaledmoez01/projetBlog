@@ -103,6 +103,7 @@ exports.admin_article_get = [
           },
           article_comments: function (callback) {
             Comment.find({ 'comment_article': req.params.id_article })
+              .populate('comment_user', 'user_first_name user_family_name ')
               .select('-__v')
               .exec(callback)
           }
