@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{headerModalTitle}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true" data-feather="x-circle"></span>
+  </button>
+</div>
+<div class="modal-body">
+  <form role="form" [formGroup]="newArticleForm" (ngSubmit)="submitNewArticleForm()">
+    <fieldset>
+      <div class="form-group">
+        <input type="text" id="title" class="form-control" formControlName="title" placeholder="Article title"
+          autofocus required>
+        <div *ngIf="newArticleForm.controls.title?.invalid && (newArticleForm.controls.title?.dirty || newArticleForm.controls.title?.touched)"
+          class="alert alert-danger">
+          <div *ngIf="newArticleForm.controls.title?.errors?.required">
+            Title is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" rows="5" id="content" formControlName="content" placeholder="Article content"
+          required></textarea>
+      </div>
+      <div class="form-group">
+          <label for="exampleFormControlFile1">Ajouter une photo</label>
+          <input type="file"
+                 (change)="detectFiles($event.target.files)"
+                 class="form-control-file"
+                 id="exampleFormControlFile1"
+                 accept=".png, .jpg, .jpeg" >
+      </div>
+      <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="newArticleForm.invalid">{{buttonCaption}}</button>
+    </fieldset>
+  </form>
+  <p class="text-danger">{{ errorMessage }}</p>
+</div>

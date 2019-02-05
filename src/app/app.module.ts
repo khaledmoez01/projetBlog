@@ -26,6 +26,7 @@ import { HeaderSimpleUserComponent } from './header-simple-user/header-simple-us
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { SingleUserComponent } from './user-list/single-user/single-user.component';
+import { NewArticleModalComponent } from './article-list/new-article-modal/new-article-modal.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './http-interceptors/token.interceptor';
@@ -45,7 +46,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderSimpleUserComponent,
     DashboardComponent,
     NewUserModalComponent,
-    SingleUserComponent
+    SingleUserComponent,
+    NewArticleModalComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    NewUserModalComponent
+    NewUserModalComponent,
+    NewArticleModalComponent
   ]
 })
 export class AppModule { }

@@ -7,7 +7,8 @@
       </a> - {{articleDetails?.article?.article_date | date | uppercase }}
     </h6>
     <img [src]="imageToShow" alt="article_image" *ngIf="!isImageLoading" class='imageUpload img-fluid'>
-    <p>{{ articleDetails?.article?.article_content }}</p>
+    <p class="articleContent">{{ articleDetails?.article?.article_content }}</p>
+    <div class='clearfix'></div>
     <button class="btn btn-secondary" (click)="onBack()">Retour</button>
   </div>
 </div>

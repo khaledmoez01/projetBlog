@@ -4,6 +4,8 @@ import { articlesListResponse } from '../models/Article.model';
 import { ArticlesService } from '../services/articles.service';
 import { Router } from '@angular/router';
 import * as feather from 'feather-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NewArticleModalComponent } from './new-article-modal/new-article-modal.component';
 
 @Component({
   selector: 'app-article-list',
@@ -16,7 +18,8 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
   constructor(
     private articlesService: ArticlesService,
-    private router: Router) { }
+    private router: Router,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -55,6 +58,11 @@ export class ArticleListComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  openNewArticleFormModal(){
+    const modalRef = this.modalService.open(NewArticleModalComponent);
+
   }
 
   ngOnDestroy() {

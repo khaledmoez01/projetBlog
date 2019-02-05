@@ -30,7 +30,6 @@ export class CommentListComponent implements OnInit, OnDestroy {
       (data: commentsListResponse[]) => {
         this.commentsService.setComments(data); 
         this.commentsService.emitComments();
-        console.log(this.comments)
       },
       (error) => {
         console.log('erreur dans comments-service lors de la récupération des commentaires');

@@ -54,9 +54,10 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
       this.articlesService.setArticleComments(this.articleDetails.article_comments);
       this.articlesService.emitArticleComments();
 
-      // voir la reponse de 'Gregor Doroschenko' dans la discussion 
-      // sur stackoverflow 'Getting Image from API in Angular 4/5+?'
-      this.articlesService
+      if (this.articleDetails.article.article_image.length > 0) {
+        // voir la reponse de 'Gregor Doroschenko' dans la discussion 
+        // sur stackoverflow 'Getting Image from API in Angular 4/5+?'
+        this.articlesService
         .getImageArticle(this.articleDetails.article.article_image.replace(/uploads\\/, ''))
         .subscribe(
           (data) => {
@@ -84,7 +85,7 @@ export class SingleArticleComponent implements OnInit, OnDestroy {
             }
           }
         );
-
+      }
     }
   }
 

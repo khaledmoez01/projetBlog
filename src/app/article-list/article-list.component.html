@@ -1,46 +1,53 @@
 <!-- Page-Title -->
 <div class="row">
-    <div class="col-sm-12">
-      <div class="page-title-box">
-        <h4 class="page-title">List of Articles</h4>
-      </div>
+  <div class="col-sm-12">
+    <div class="page-title-box">
+      <h4 class="page-title">List of Articles</h4>
     </div>
   </div>
-  <!-- end page title end breadcrumb -->
+</div>
+<!-- end page title end breadcrumb -->
 
 <div class="row">
-    <div class="col-sm-12">
-      <div class="card-box">
-        <div class="table-responsive-sm">
-          <table class="table table-hover" id="tableArticles">
-            <thead>
-              <tr>
-                <th scope="col">Action</th>
-                <th scope="col">Title</th>
-                <th scope="col">Overview</th>
-                <th scope="col">Author</th>
-                <th scope="col">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let article of articles;">
-                <td class="actions">
-                  <a (click)="onDeleteArticle(article)" title="delete">
-                    <img src="../../assets/image/trash-2.svg">
-                  </a>
-                  <a (click)="onEditArticle(article)" title="details">
-                    <img src="../../assets/image/info.svg">
-                  </a>
-                </td>
-                <td>{{article.article_title}}</td>
-                <td>{{article.article_virtual_content_introduction}}</td>
-                <td>{{article.article_user.user_virtual_full_name}}</td>
-                <td>{{article.article_date  | date | uppercase }}</td>
-                <!--td>{{article.article_date  | date: 'medium' | uppercase }}</td!-->
-              </tr>
-            </tbody>
-          </table>
+  <div class="col-sm-12">
+    <div class="card-box">
+      <div class="row ">
+        <div class="col-sm-6">
+          <div class="mb-3">
+            <button type="button" class="btn btn-success" (click)="openNewArticleFormModal()">Add</button>
+          </div>
         </div>
+      </div>
+      <div class="table-responsive-sm">
+        <table class="table table-hover" id="tableArticles">
+          <thead>
+            <tr>
+              <th scope="col">Action</th>
+              <th scope="col">Title</th>
+              <th scope="col">Overview</th>
+              <th scope="col">Author</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of articles;">
+              <td class="actions">
+                <a (click)="onDeleteArticle(article)" title="delete">
+                  <img src="../../assets/image/trash-2.svg">
+                </a>
+                <a (click)="onEditArticle(article)" title="details">
+                  <img src="../../assets/image/info.svg">
+                </a>
+              </td>
+              <td>{{article.article_title}}</td>
+              <td>{{article.article_virtual_content_introduction}}</td>
+              <td>{{article.article_user.user_virtual_full_name}}</td>
+              <td>{{article.article_date | date | uppercase }}</td>
+              <!--td>{{article.article_date  | date: 'medium' | uppercase }}</td!-->
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+</div>

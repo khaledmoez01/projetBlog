@@ -9,3 +9,8 @@ a.card-link{
   text-decoration: none;
   background-color: transparent;
 }
+
+p.articleContent {
+  word-break: break-all;
+  white-space: normal;
+}

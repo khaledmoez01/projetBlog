@@ -52,6 +52,10 @@ export class ArticlesService {
     return this.http.get<articleSingleResponse>(`${environment.uri}/admin/article/${id_article}`);
   }
 
+  newArticle(formData: FormData) {
+    return this.http.post<articlesListResponse>(`${environment.uri}/admin/article/create`, formData)
+  }
+
   getImageArticle(imageName: string) {
     return this.http.get(`${environment.uri}/uploads/${imageName}`, {responseType: "blob"});
   }
@@ -74,6 +78,11 @@ export class ArticlesService {
         }
       }
     );
+  }
+
+  pushIntoArticles(newArticle: articlesListResponse) {
+    this.articles.push(newArticle);    
+    this.emitArticles();
   }
 
   removeFromArticles(index: number) {
