@@ -43,8 +43,8 @@ exports.admin_articles_get = [
   (req, res, next) => {
     if (req.payload.role === 'admin') {
       Article.find({}/*, 'article_title article_virtual_content_introduction' */)
-      // kmg commentairechange
-      // .select('-article_comments -article_image ') // le '-' sert à exclure ces donnes
+        // kmg commentairechange
+        // .select('-article_comments -article_image ') // le '-' sert à exclure ces donnes
         .select(' -article_image -__v') // le '-' sert à exclure ces donnes
         .populate('article_user', 'user_first_name user_family_name ')
         .exec(function (err, listArticles) {
@@ -80,7 +80,30 @@ exports.admin_article_create_post = [
           return res.status(500).send({ code: '500', message: 'There was a problem adding the article to the database: ' + err.message })
         }
         // successful
-        res.status(200).send(article)
+        // res.status(200).send(article)
+
+        User.findById(article.article_user, function (err, user) {
+          if (err) {
+            return res.status(500).send({ code: '500', message: "There was a problem finding the article user's details from the database: " + err.message })
+          }
+          res.status(200).send({
+            article_title: article.article_title,
+            _id: article._id,
+            article_content: article.article_content,
+            article_date: article.article_date,
+            article_virtual_content_introduction: article.article_virtual_content_introduction,
+            article_virtual_url: article.article_virtual_url,
+            id: article.id,
+            article_user: {
+              _id: user.id,
+              user_first_name: user.user_first_name,
+              user_family_name: user.user_family_name,
+              user_virtual_full_name: user.user_virtual_full_name,
+              user_virtual_url: user.user_virtual_url,
+              id: user.id
+            }
+          })
+        })
       })
     } else {
       return res.status(403).send({ code: 403, message: 'access denied' })

@@ -189,18 +189,10 @@
 									"type": "string",
 									"description": "le contenu de l'article."
 								},
-								"article_image": {
-									"type": "string",
-									"description": "l'image associée à l'article."
-								},
 								"article_date": {
 									"type": "string",
 									"format": "date-time",
 									"description": "date de création de l'article."
-								},
-								"article_user": {
-									"type": "string",
-									"description": "l'objectID de l'auteur."
 								},
 								"_id": {
 									"type": "string",
@@ -218,8 +210,28 @@
 									"type": "string",
 									"description": "l'url interne de l'article créé."
 								},
-								"__v": {
-									"type": "integer"
+								"article_user": {
+									"type": "object",
+									"properties": {
+										"_id": {
+											"type": "string"
+										},
+										"user_first_name": {
+											"type": "string"
+										},
+										"user_family_name": {
+											"type": "string"
+										},
+										"user_virtual_full_name": {
+											"type": "string"
+										},
+										"user_virtual_url": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										}
+									}
 								}
 							}
 						}
